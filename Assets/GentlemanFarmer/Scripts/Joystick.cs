@@ -47,6 +47,8 @@ public class Joystick : MonoBehaviour
         joystickOutline.gameObject.SetActive(false);
 
         canControl = false;
+
+        move = Vector3.zero;
     }
 
     private void ControlJoystick()
