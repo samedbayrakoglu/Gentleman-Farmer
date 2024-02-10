@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [Header(" Settings")]
     [SerializeField] private float moveSpeed;
 
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();

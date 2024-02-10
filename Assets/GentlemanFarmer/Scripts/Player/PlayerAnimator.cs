@@ -36,4 +36,14 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.Play("Idle");
     }
+
+    public void PlaySowAnimation()
+    {
+        animator.SetLayerWeight(1, 1); // layer index of Sow is 1
+    }
+
+    public void StopSowAnimation()
+    {
+        animator.SetLayerWeight (1, 0);
+    }
 }
