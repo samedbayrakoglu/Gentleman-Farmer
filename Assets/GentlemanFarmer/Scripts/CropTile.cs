@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class CropTile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum State { Empty, Sown, Watered}
+    public State state;
+
+
+
+    private void Start()
     {
-        
+        state = State.Empty;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Sow()
     {
-        
+        state = State.Sown;
+
+        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        go.transform.position = transform.position;
+        go.transform.localScale = Vector3.one / 2;
+    }
+
+    public bool IsEmpty ()
+    {
+        return state == State.Empty;
     }
 }
