@@ -6,7 +6,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerAnimator))]
 [RequireComponent(typeof(PlayerToolSelector))]
-public class PlayerSowAbility : MonoBehaviour
+public class PlayerWaterAbility : MonoBehaviour
 {
     [Header(" Elements")]
     private PlayerAnimator playerAnimator;
@@ -22,19 +22,19 @@ public class PlayerSowAbility : MonoBehaviour
         playerAnimator = GetComponent<PlayerAnimator>();
         playerToolSelector = GetComponent<PlayerToolSelector>();
 
-        SeedParticles.OnSeedCollied += SeedsCollidedCallback;
+        WaterParticles.OnWaterCollided += WaterCollidedCallback;
         
-        CropField.OnFullySown += CropFieldFullySownCallback;
+        // CropField.OnFullySown += CropFieldFullySownCallback;
 
         playerToolSelector.OnToolSelected += ToolSelectedCallback;
     }
 
-    private void SeedsCollidedCallback(Vector3[] seedCollisionPositions) 
+    private void WaterCollidedCallback(Vector3[] waterPositions) 
     {
         if (currentCropField == null)
             return;
 
-        currentCropField.SeedsCollidedCallback(seedCollisionPositions);
+        // currentCropField.WaterCollidedCallback(waterPositions);
     }
 
     private void CropFieldFullySownCallback(CropField cropField)
@@ -47,8 +47,8 @@ public class PlayerSowAbility : MonoBehaviour
 
     private void ToolSelectedCallback(PlayerToolSelector.Tool selectedTool)
     {
-        if(!playerToolSelector.CanSow())
-            playerAnimator.StopSowAnimation();
+        if(!playerToolSelector.CanWater())
+            playerAnimator.StopWaterAnimation();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -89,9 +89,9 @@ public class PlayerSowAbility : MonoBehaviour
 
     private void OnDestroy()
     {
-        SeedParticles.OnSeedCollied -= SeedsCollidedCallback;
+        WaterParticles.OnWaterCollided -= WaterCollidedCallback;
 
-        CropField.OnFullySown -= CropFieldFullySownCallback;
+        // CropField.OnFullySown -= CropFieldFullySownCallback;
 
         playerToolSelector.OnToolSelected -= ToolSelectedCallback;
 

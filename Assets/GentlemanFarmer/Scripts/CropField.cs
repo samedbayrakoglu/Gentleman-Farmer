@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,15 @@ public class CropField : MonoBehaviour
     [Header(" Elements ")]
     [SerializeField] private Transform tilesParent;
     private List<CropTile> cropTiles = new List<CropTile>();
+    
+    [Header(" Settings")]
+    [SerializeField] private CropData cropData;
+    private TileFieldState fieldState;
+
+    private int tilesSown;
+
+    [Header(" Actions ")]
+    public static Action<CropField> OnFullySown;
 
 
 
@@ -41,7 +51,18 @@ public class CropField : MonoBehaviour
 
     private void Sow (CropTile tileToSow)
     {
-        tileToSow.Sow();
+        tileToSow.Sow(cropData);
+
+        tilesSown++;
+        if (tilesSown == cropTiles.Count)
+            FieldFullySown();
+    }
+
+    private void FieldFullySown ()
+    {
+        fieldState = TileFieldState.Sown;
+
+        OnFullySown?.Invoke(this);
     }
 
     private CropTile GetClosestCropTile(Vector3 seedPosition)
@@ -68,5 +89,10 @@ public class CropField : MonoBehaviour
             return null;
 
         return closestTile;
+    }
+
+    public bool IsEmpty ()
+    {
+        return fieldState == TileFieldState.Empty;
     }
 }

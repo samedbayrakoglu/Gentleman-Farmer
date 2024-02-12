@@ -2,29 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TileFieldState { Empty, Sown, Watered}
+
 public class CropTile : MonoBehaviour
 {
-    public enum State { Empty, Sown, Watered}
-    public State state;
+    [Header(" Elements")]
+    [SerializeField] private Transform cropParent;
 
+    [Header(" Settings")]
+    public TileFieldState state;
 
 
     private void Start()
     {
-        state = State.Empty;
+        state = TileFieldState.Empty;
     }
 
-    public void Sow()
+    public void Sow(CropData cropData)
     {
-        state = State.Sown;
+        state = TileFieldState.Sown;
 
-        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        go.transform.position = transform.position;
-        go.transform.localScale = Vector3.one / 2;
+        Crop crop = Instantiate(cropData.cropPrefab, transform.position, Quaternion.identity, cropParent);
     }
 
     public bool IsEmpty ()
     {
-        return state == State.Empty;
+        return state == TileFieldState.Empty;
     }
 }
