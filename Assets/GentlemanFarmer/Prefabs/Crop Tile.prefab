@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf93df5c2b583d34b9d6ca039f42ccd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   cropParent: {fileID: 5516710455910517802}
+  tileRenderer: {fileID: 5516710455595367063}
+  state: 0
 --- !u!1 &5516710455595367061
 GameObject:
   m_ObjectHideFlags: 0

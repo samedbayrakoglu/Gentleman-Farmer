@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CropField : MonoBehaviour
@@ -14,9 +15,11 @@ public class CropField : MonoBehaviour
     private TileFieldState fieldState;
 
     private int tilesSown;
+    private int tilesWatered;
 
     [Header(" Actions ")]
     public static Action<CropField> OnFullySown;
+    public static Action<CropField> OnFullyWatered;
 
 
 
@@ -58,11 +61,43 @@ public class CropField : MonoBehaviour
             FieldFullySown();
     }
 
+    public void WaterCollidedCallback(Vector3[] waterPositions)
+    {
+        for (int i = 0; i < waterPositions.Length; i++)
+        {
+            CropTile closestCropTile = GetClosestCropTile(waterPositions[i]);
+
+            if (closestCropTile == null) // check if there is a crop tile
+                continue;
+
+            if (!closestCropTile.IsSown()) // check if the tile is sown
+                continue;
+
+            Water(closestCropTile);
+        }
+    }
+
+    private void Water(CropTile cropTile)
+    {
+        cropTile.Water();
+
+        tilesWatered++;
+        if(tilesWatered == cropTiles.Count)
+            FieldFullyWatered();
+    }
+
     private void FieldFullySown ()
     {
         fieldState = TileFieldState.Sown;
 
         OnFullySown?.Invoke(this);
+    }
+
+    private void FieldFullyWatered()
+    {
+        fieldState = TileFieldState.Watered;
+
+        OnFullyWatered?.Invoke(this);
     }
 
     private CropTile GetClosestCropTile(Vector3 seedPosition)
@@ -94,5 +129,15 @@ public class CropField : MonoBehaviour
     public bool IsEmpty ()
     {
         return fieldState == TileFieldState.Empty;
+    }
+
+    public bool IsSown()
+    {
+        return fieldState == TileFieldState.Sown;
+    }
+
+    public bool IsWatered()
+    {
+        return fieldState == TileFieldState.Watered;
     }
 }

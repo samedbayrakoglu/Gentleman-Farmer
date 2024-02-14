@@ -34,14 +34,14 @@ public class PlayerWaterAbility : MonoBehaviour
         if (currentCropField == null)
             return;
 
-        // currentCropField.WaterCollidedCallback(waterPositions);
+        currentCropField.WaterCollidedCallback(waterPositions);
     }
 
-    private void CropFieldFullySownCallback(CropField cropField)
+    private void CropFieldFullyWateredCallback(CropField cropField)
     {
         if(cropField == currentCropField)
         {
-            playerAnimator.StopSowAnimation();
+            playerAnimator.StopWaterAnimation();
         }
     }
 
@@ -53,7 +53,7 @@ public class PlayerWaterAbility : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("CropField") && other.GetComponent<CropField>().IsEmpty())
+        if(other.CompareTag("CropField") && other.GetComponent<CropField>().IsSown())
         {
             currentCropField = other.GetComponent<CropField>(); // get the crop field to sow
 
@@ -63,13 +63,13 @@ public class PlayerWaterAbility : MonoBehaviour
 
     private void EnteredCropField(CropField enteredCropField)
     {
-        if(playerToolSelector.CanSow())
-            playerAnimator.PlaySowAnimation();
+        if(playerToolSelector.CanWater())
+            playerAnimator.PlayWaterAnimation();
     }
 
     private void OnTriggerStay(Collider other) 
     {
-        if(other.CompareTag("CropField") && other.GetComponent<CropField>().IsEmpty())
+        if(other.CompareTag("CropField") && other.GetComponent<CropField>().IsSown())
         {
             currentCropField = other.GetComponent<CropField>();
 
@@ -81,7 +81,7 @@ public class PlayerWaterAbility : MonoBehaviour
     {
         if (other.CompareTag("CropField"))
         {
-            playerAnimator.StopSowAnimation();
+            playerAnimator.StopWaterAnimation();
 
             currentCropField = null;
         }
