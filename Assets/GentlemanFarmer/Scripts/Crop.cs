@@ -10,6 +10,6 @@ public class Crop : MonoBehaviour
 
     public void ScaleUp()
     {
-        cropRenderer.localScale = Vector3.one;
+        cropRenderer.gameObject.LeanScale(Vector3.one, 1);
     }
 }

@@ -100,6 +100,24 @@ public class CropField : MonoBehaviour
         OnFullyWatered?.Invoke(this);
     }
 
+    [NaughtyAttributes.Button]
+    private void InstantlySowTiles()
+    {
+        for (int i = 0; i < cropTiles.Count; i++)
+        {
+            Sow(cropTiles[i]);
+        }
+    }
+
+    [NaughtyAttributes.Button]
+    private void InstantlyWaterTiles()
+    {
+        for (int i = 0; i < cropTiles.Count; i++)
+        {
+            Water(cropTiles[i]);
+        }
+    }
+
     private CropTile GetClosestCropTile(Vector3 seedPosition)
     {
         float minDistance = Mathf.Infinity;
