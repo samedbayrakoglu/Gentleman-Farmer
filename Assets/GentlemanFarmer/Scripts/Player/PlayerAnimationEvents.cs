@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
@@ -8,7 +10,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     [SerializeField] ParticleSystem seedParticles;
     [SerializeField] ParticleSystem waterParticles;
 
-
+    [Header(" Events ")]
+    [SerializeField] private UnityEvent startHarvestingEvent;
+    [SerializeField] private UnityEvent stopHarvestingEvent;
 
     private void PlaySeedParticles()
     {
@@ -18,5 +22,15 @@ public class PlayerAnimationEvents : MonoBehaviour
     private void PlayWaterParticles()
     {
         waterParticles.Play();
+    }
+
+    private void StartHarvestingCallback()
+    {
+        startHarvestingEvent?.Invoke();
+    }
+
+    private void StopHarvestingCallback()
+    {
+        stopHarvestingEvent?.Invoke();
     }
 }

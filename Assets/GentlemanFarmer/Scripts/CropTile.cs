@@ -31,14 +31,36 @@ public class CropTile : MonoBehaviour
     {
         state = TileFieldState.Watered;
 
-        // tileRenderer.material.color = Color.white * 0.3f; // == (1, 1, 1) * 0.3f 
-
         crop.ScaleUp();
 
         tileRenderer.gameObject.LeanColor(Color.white * 0.3f, 1);
-
-        // StartCoroutine(ColorTileCoroutine());
     }
+
+    public void Harvest()
+    {
+        state = TileFieldState.Empty;
+
+        crop.ScaleDown();
+
+        tileRenderer.gameObject.LeanColor(Color.white, 1);
+    }
+
+    public bool IsEmpty ()
+    {
+        return state == TileFieldState.Empty;
+    }
+
+    public bool IsSown()
+    {
+        return state == TileFieldState.Sown;
+    }
+
+
+
+
+
+
+
 
     // IEnumerator ColorTileCoroutine ()
     // {
@@ -58,14 +80,4 @@ public class CropTile : MonoBehaviour
 
     //     yield return null;
     // }
-
-    public bool IsEmpty ()
-    {
-        return state == TileFieldState.Empty;
-    }
-
-    public bool IsSown()
-    {
-        return state == TileFieldState.Sown;
-    }
 }

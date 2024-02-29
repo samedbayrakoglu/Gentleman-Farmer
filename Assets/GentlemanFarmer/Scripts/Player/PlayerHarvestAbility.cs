@@ -9,11 +9,13 @@ using UnityEngine;
 public class PlayerHarvestAbility : MonoBehaviour
 {
     [Header(" Elements")]
+    [SerializeField] private Transform harvestSphere;
     private PlayerAnimator playerAnimator;
     private PlayerToolSelector playerToolSelector;
 
     [Header(" Settings")]
     private CropField currentCropField;
+    private bool canHarvest;
 
 
 
@@ -54,7 +56,12 @@ public class PlayerHarvestAbility : MonoBehaviour
     private void EnteredCropField(CropField enteredCropField)
     {
         if(playerToolSelector.CanHarvest())
+        {
             playerAnimator.PlayHarvestAnimation();
+
+            if(canHarvest)
+                currentCropField.Harvest(harvestSphere);
+        }
     }
 
     private void OnTriggerStay(Collider other) 
@@ -82,6 +89,18 @@ public class PlayerHarvestAbility : MonoBehaviour
         CropField.OnFullyHarvested -= CropFieldFullyHarvestedCallback;
 
         playerToolSelector.OnToolSelected -= ToolSelectedCallback;
+    }
+
+
+
+    public void HarvestingStartedCallback()
+    {
+        canHarvest = true;
+    }
+
+    public void HarvestingStoppedCallback()
+    {
+        canHarvest = false;
     }
 }
 

@@ -10,6 +10,12 @@ public class Crop : MonoBehaviour
 
     public void ScaleUp()
     {
-        cropRenderer.gameObject.LeanScale(Vector3.one, 1);
+        cropRenderer.gameObject.LeanScale(Vector3.one, 1).setEase(LeanTweenType.easeOutBack);
+    }
+
+    public void ScaleDown()
+    {
+        cropRenderer.gameObject.LeanScale(Vector3.zero, 1).
+            setEase(LeanTweenType.easeOutBack).setOnComplete(() => { Destroy(gameObject); });
     }
 }
