@@ -6,6 +6,7 @@ public class Crop : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private Transform cropRenderer;
+    [SerializeField] private ParticleSystem harvestedParticle;
 
 
     public void ScaleUp()
@@ -17,5 +18,8 @@ public class Crop : MonoBehaviour
     {
         cropRenderer.gameObject.LeanScale(Vector3.zero, 1).
             setEase(LeanTweenType.easeOutBack).setOnComplete(() => { Destroy(gameObject); });
+        
+        harvestedParticle.transform.parent = null;
+        harvestedParticle.gameObject.SetActive(true);
     }
 }

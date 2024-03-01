@@ -7,8 +7,7 @@ using UnityEngine;
 public class CropData : ScriptableObject
 {
     [Header(" Elements")]
-
     public Crop cropPrefab;
-
+    public CropType cropType;
     
 }
